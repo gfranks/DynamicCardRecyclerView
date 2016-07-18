@@ -1,4 +1,4 @@
-package com.github.gfranks.dynamiccard.adapter.holder;
+package com.github.gfranks.dynamiccard;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

@@ -3,7 +3,7 @@ package com.github.gfranks.dynamiccard.sample;
 import android.view.View;
 import android.widget.TextView;
 
-import com.github.gfranks.dynamiccard.adapter.holder.DynamicCardContentViewHolder;
+import com.github.gfranks.dynamiccard.DynamicCardContentViewHolder;
 
 public class DynamicItemViewHolder extends DynamicCardContentViewHolder {
 

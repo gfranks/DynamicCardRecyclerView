@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.github.gfranks.dynamiccard.adapter.DynamicCardAdapter;
-import com.github.gfranks.dynamiccard.adapter.holder.DynamicCardViewHolder;
+import com.github.gfranks.dynamiccard.DynamicCardAdapter;
+import com.github.gfranks.dynamiccard.DynamicCardViewHolder;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.github.gfranks.dynamiccard.adapter.holder;
+package com.github.gfranks.dynamiccard;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
@@ -6,9 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.github.gfranks.dynamiccard.R;
-import com.github.gfranks.dynamiccard.adapter.DynamicCardAdapter;
 
 public class DynamicCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 

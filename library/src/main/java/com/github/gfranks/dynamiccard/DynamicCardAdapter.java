@@ -1,4 +1,4 @@
-package com.github.gfranks.dynamiccard.adapter;
+package com.github.gfranks.dynamiccard;
 
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.RecyclerView;
@@ -8,14 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.gfranks.dynamiccard.DynamicCardCallback;
-import com.github.gfranks.dynamiccard.DynamicTouchHelper;
-import com.github.gfranks.dynamiccard.R;
-import com.github.gfranks.dynamiccard.adapter.holder.DynamicCardContentViewHolder;
-import com.github.gfranks.dynamiccard.adapter.holder.DynamicCardViewHolder;
-
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class DynamicCardAdapter<T, VH extends DynamicCardContentViewHolder> extends RecyclerView.Adapter<DynamicCardViewHolder> {
@@ -68,6 +61,10 @@ public abstract class DynamicCardAdapter<T, VH extends DynamicCardContentViewHol
     public final void addItem(T item, int position) {
         mItems.add(position, item);
         notifyItemInserted(position);
+
+        if (mCallback != null) {
+            mCallback.onDynamicCardAdded(this, position);
+        }
     }
 
     public final void removeItem(T item) {
@@ -77,6 +74,10 @@ public abstract class DynamicCardAdapter<T, VH extends DynamicCardContentViewHol
     public final void removeItem(int position) {
         mItems.remove(position);
         notifyItemRemoved(position);
+
+        if (mCallback != null) {
+            mCallback.onDynamicCardRemoved(this, position);
+        }
     }
 
     public final void moveItem(T item, int toPosition) {

@@ -8,13 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.gfranks.dynamiccard.DynamicCardCallback;
-import com.github.gfranks.dynamiccard.adapter.DynamicCardAdapter;
+import com.github.gfranks.dynamiccard.DynamicCardAdapter;
 import com.github.gfranks.minimal.notification.GFMinimalNotification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DynamicCardCallback, RecyclerViewAdapter.OnItemClickListener {
+public class DynamicRecyclerViewActivity extends AppCompatActivity implements DynamicCardCallback, RecyclerViewAdapter.OnItemClickListener {
 
     private RecyclerViewAdapter mAdapter;
     private List<DynamicItem> mItems;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements DynamicCardCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dynamic_recyclerview);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements DynamicCardCallba
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.activity_dynamic_recyclerview, menu);
         return true;
     }
 
@@ -58,7 +58,15 @@ public class MainActivity extends AppCompatActivity implements DynamicCardCallba
     }
 
     @Override
+    public void onDynamicCardAdded(DynamicCardAdapter adapter, int position) {
+    }
+
+    @Override
     public void onDynamicCardPositionChanged(DynamicCardAdapter adapter, int fromPosition, int toPosition) {
+    }
+
+    @Override
+    public void onDynamicCardRemoved(DynamicCardAdapter adapter, int position) {
     }
 
     @Override

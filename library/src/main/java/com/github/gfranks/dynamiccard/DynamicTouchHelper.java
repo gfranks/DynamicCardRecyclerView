@@ -3,9 +3,7 @@ package com.github.gfranks.dynamiccard;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import com.github.gfranks.dynamiccard.adapter.DynamicCardAdapter;
-
-public class DynamicTouchHelper extends ItemTouchHelper.SimpleCallback {
+class DynamicTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private static final int DRAG_FLAGS = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
     private static final int SWIPE_FLAGS = 0;
@@ -21,7 +19,8 @@ public class DynamicTouchHelper extends ItemTouchHelper.SimpleCallback {
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
         if (mAdapter.isEditMode() && (!mAdapter.supportsAddingDynamicCards() || (mAdapter.supportsAddingDynamicCards()
                 && viewHolder.getAdapterPosition() != mAdapter.getItemCount() - 1))) {
-            mAdapter.moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            mAdapter.moveItem(viewHolder.getAdapterPosition(), Math.min(target.getAdapterPosition(), mAdapter.supportsAddingDynamicCards()
+                    && target.getAdapterPosition() == mAdapter.getItemCount() - 1 ? mAdapter.getItemCount() - 2 : target.getAdapterPosition()));
         }
         return mAdapter.isEditMode();
     }
