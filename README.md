@@ -1,5 +1,6 @@
 DynamicCard
 ===========
+RecyclerView approach to support drag, drop, and moving items to different positions while wrapping your content in a card view layout with a popup menu selection.
 
 Installation:
 ------------
