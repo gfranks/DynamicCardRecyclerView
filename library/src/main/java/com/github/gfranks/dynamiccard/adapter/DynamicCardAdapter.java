@@ -81,7 +81,8 @@ public abstract class DynamicCardAdapter<T, VH extends DynamicCardContentViewHol
 
     public final void moveItem(T item, int toPosition) {
         int fromPosition = mItems.indexOf(item);
-        Collections.swap(mItems, fromPosition, toPosition);
+        mItems.remove(fromPosition);
+        mItems.add(toPosition, item);
         notifyItemMoved(fromPosition, toPosition);
 
         if (mCallback != null) {
@@ -90,7 +91,9 @@ public abstract class DynamicCardAdapter<T, VH extends DynamicCardContentViewHol
     }
 
     public final void moveItem(int fromPosition, int toPosition) {
-        Collections.swap(mItems, fromPosition, toPosition);
+        T item = mItems.get(fromPosition);
+        mItems.remove(fromPosition);
+        mItems.add(toPosition, item);
         notifyItemMoved(fromPosition, toPosition);
 
         if (mCallback != null) {
