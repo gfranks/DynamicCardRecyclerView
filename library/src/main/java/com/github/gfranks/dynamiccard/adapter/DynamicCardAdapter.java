@@ -62,7 +62,7 @@ public abstract class DynamicCardAdapter<T, VH extends RecyclerView.ViewHolder> 
 
     public final void addItem(T item) {
         mItems.add(item);
-        notifyItemInserted(mItems.size() - (isEditMode() ? 1 : 0));
+        notifyItemInserted(mItems.size() - (isEditMode() && supportsAddingDynamicCards() ? 1 : 0));
     }
 
     public final void removeItem(T item) {
@@ -75,12 +75,12 @@ public abstract class DynamicCardAdapter<T, VH extends RecyclerView.ViewHolder> 
     }
 
     public final void moveItem(T item, int toPosition) {
-        int firstPosition = mItems.indexOf(item);
-        Collections.swap(mItems, firstPosition, toPosition);
-        notifyItemMoved(firstPosition, toPosition);
+        int fromPosition = mItems.indexOf(item);
+        Collections.swap(mItems, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
 
         if (mCallback != null) {
-            mCallback.onDynamicCardPositionChanged(this, firstPosition, toPosition);
+            mCallback.onDynamicCardPositionChanged(this, fromPosition, toPosition);
         }
     }
 

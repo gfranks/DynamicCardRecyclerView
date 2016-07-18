@@ -19,7 +19,8 @@ public class DynamicTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        if (mAdapter.isEditMode() && viewHolder.getAdapterPosition() != mAdapter.getItemCount() - 1) {
+        if (mAdapter.isEditMode() && (!mAdapter.supportsAddingDynamicCards() || (mAdapter.supportsAddingDynamicCards()
+                && viewHolder.getAdapterPosition() != mAdapter.getItemCount() - 1))) {
             mAdapter.moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         }
         return mAdapter.isEditMode();
@@ -31,7 +32,8 @@ public class DynamicTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        return makeMovementFlags(mAdapter.isEditMode() && viewHolder.getAdapterPosition() != mAdapter.getItemCount() - 1
+        return makeMovementFlags(mAdapter.isEditMode() && (!mAdapter.supportsAddingDynamicCards()
+                || (mAdapter.supportsAddingDynamicCards() && viewHolder.getAdapterPosition() != mAdapter.getItemCount() - 1))
                 ? DRAG_FLAGS : 0, SWIPE_FLAGS);
     }
 }
