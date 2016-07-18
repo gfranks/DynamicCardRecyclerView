@@ -3,7 +3,6 @@ package com.github.gfranks.dynamiccard.sample;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.github.gfranks.dynamiccard.adapter.DynamicCardAdapter;
 import com.github.gfranks.dynamiccard.adapter.holder.DynamicCardViewHolder;
@@ -12,13 +11,16 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends DynamicCardAdapter<DynamicItem, DynamicItemViewHolder> {
 
-    public RecyclerViewAdapter(RecyclerView recyclerView, List<DynamicItem> items) {
+    private OnItemClickListener mOnItemClickListener;
+
+    public RecyclerViewAdapter(RecyclerView recyclerView, List<DynamicItem> items, OnItemClickListener onItemClickListener) {
         super(recyclerView, items);
+        mOnItemClickListener = onItemClickListener;
     }
 
     @Override
     public boolean supportsAddingDynamicCards() {
-        return false;
+        return true;
     }
 
     @Override
@@ -28,6 +30,10 @@ public class RecyclerViewAdapter extends DynamicCardAdapter<DynamicItem, Dynamic
 
     @Override
     public void onBindDynamicCardViewHolder(DynamicCardViewHolder dynamicCardViewHolder, DynamicItemViewHolder holder, int position) {
-        ((TextView) holder.itemView.findViewById(R.id.dynamic_item_text)).setText(getItem(position).getText());
+        holder.bind(getItem(position), mOnItemClickListener);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 }

@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import com.github.gfranks.dynamiccard.DynamicCardCallback;
 import com.github.gfranks.dynamiccard.DynamicTouchHelper;
 import com.github.gfranks.dynamiccard.R;
+import com.github.gfranks.dynamiccard.adapter.holder.DynamicCardContentViewHolder;
 import com.github.gfranks.dynamiccard.adapter.holder.DynamicCardViewHolder;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class DynamicCardAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<DynamicCardViewHolder> {
+public abstract class DynamicCardAdapter<T, VH extends DynamicCardContentViewHolder> extends RecyclerView.Adapter<DynamicCardViewHolder> {
 
     private static final int VIEW_TYPE_ADD = 100;
 
@@ -61,8 +62,12 @@ public abstract class DynamicCardAdapter<T, VH extends RecyclerView.ViewHolder> 
     }
 
     public final void addItem(T item) {
-        mItems.add(item);
-        notifyItemInserted(mItems.size() - (isEditMode() && supportsAddingDynamicCards() ? 1 : 0));
+        addItem(item, mItems.size());
+    }
+
+    public final void addItem(T item, int position) {
+        mItems.add(position, item);
+        notifyItemInserted(position);
     }
 
     public final void removeItem(T item) {
@@ -137,8 +142,9 @@ public abstract class DynamicCardAdapter<T, VH extends RecyclerView.ViewHolder> 
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_dynamic_card_recyclerview_item, parent, false), this);
         if (viewType != VIEW_TYPE_ADD) {
             VH holder = onCreateDynamicCardViewHolder(dynamicCardViewHolder, dynamicCardViewHolder.getDynamicCardContentContainer(), viewType);
-            dynamicCardViewHolder.getDynamicCardContentContainer().addView(holder.itemView);
+            dynamicCardViewHolder.getDynamicCardContentContainer().addView(holder.itemView, 0);
             dynamicCardViewHolder.getDynamicCardContentContainer().setTag(holder);
+            holder.itemView.setTag(dynamicCardViewHolder);
         }
         return dynamicCardViewHolder;
     }

@@ -3,16 +3,18 @@ package com.github.gfranks.dynamiccard.sample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.gfranks.dynamiccard.DynamicCardCallback;
 import com.github.gfranks.dynamiccard.adapter.DynamicCardAdapter;
+import com.github.gfranks.minimal.notification.GFMinimalNotification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DynamicCardCallback {
+public class MainActivity extends AppCompatActivity implements DynamicCardCallback, RecyclerViewAdapter.OnItemClickListener {
 
     private RecyclerViewAdapter mAdapter;
     private List<DynamicItem> mItems;
@@ -22,8 +24,10 @@ public class MainActivity extends AppCompatActivity implements DynamicCardCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.dynamic_list);
-        mAdapter = new RecyclerViewAdapter(recyclerView, getSampleItems());
+        mAdapter = new RecyclerViewAdapter(recyclerView, getSampleItems(), this);
         mAdapter.setDynamicCardCallback(this);
         recyclerView.setAdapter(mAdapter);
     }
@@ -55,6 +59,12 @@ public class MainActivity extends AppCompatActivity implements DynamicCardCallba
 
     @Override
     public void onDynamicCardPositionChanged(DynamicCardAdapter adapter, int fromPosition, int toPosition) {
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        GFMinimalNotification.make(findViewById(R.id.coordinator_layout), mAdapter.getItem(position).getText(),
+                GFMinimalNotification.LENGTH_LONG, GFMinimalNotification.TYPE_DEFAULT).show();
     }
 
     private List<DynamicItem> getSampleItems() {
